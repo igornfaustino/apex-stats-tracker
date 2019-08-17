@@ -23,32 +23,28 @@ app.use(errors.middleware.crashProtector());
 app.use(
 	expressWinston.logger({
 		transports: [
-			new winston.transports.File({ filename: 'logs/server.log' })
+			new winston.transports.File({ filename: 'logs/server.log' }),
 		],
 		format: winston.format.json(),
 		meta: true, // optional: control whether you want to log the meta data about the request (default to true)
-		expressFormat: true // Use the default Express/morgan request formatting. Enabling this will override any msg if true. Will only output colors with colorize set to true
-	})
+		expressFormat: true, // Use the default Express/morgan request formatting. Enabling this will override any msg if true. Will only output colors with colorize set to true
+	}),
 );
 
 // --------- routes
 require('./routes')(app);
 
-app.get('*', (req, res) => {
-	res.send('express-custom-starter-project');
-});
-
 app.use(
 	expressWinston.errorLogger({
 		transports: [
 			new winston.transports.Console(),
-			new winston.transports.File({ filename: 'logs/error.log' })
+			new winston.transports.File({ filename: 'logs/error.log' }),
 		],
 		format: winston.format.combine(
 			winston.format.colorize(),
-			winston.format.json()
-		)
-	})
+			winston.format.json(),
+		),
+	}),
 );
 
 app.use(errors.middleware.errorHandler);
