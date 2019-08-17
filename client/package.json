@@ -18,7 +18,14 @@
     "babel-eslint": "^10.0.1",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
-    "vue-template-compiler": "^2.6.10"
+    "vue-template-compiler": "^2.6.10",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-config-node": "^4.0.0",
+    "eslint-config-prettier": "^6.0.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-node": "^9.1.0",
+    "eslint-plugin-prettier": "^3.1.0",
+    "prettier": "^1.18.2"
   },
   "eslintConfig": {
     "root": true,
@@ -26,10 +33,27 @@
       "node": true
     },
     "extends": [
+      "airbnb-base",
+      "prettier",
       "plugin:vue/essential",
       "eslint:recommended"
     ],
-    "rules": {},
+    "plugins": [
+      "prettier"
+    ],
+    "rules": {
+      "prettier/prettier": "error",
+      "no-unused-vars": [
+        "warn",
+        {
+          "argsIgnorePattern": "^_"
+        }
+      ],
+      "no-console": "off",
+      "func-names": "off",
+      "no-use-before-define": "off",
+      "node/no-unpublished-require": "off"
+    },
     "parserOptions": {
       "parser": "babel-eslint"
     }
