@@ -1,0 +1,27 @@
+{
+    "env": {
+        "node": true,
+        "mocha": true
+    },
+    "extends": [
+        "airbnb-base",
+        "prettier",
+        "plugin:node/recommended"
+    ],
+    "plugins": [
+        "prettier"
+    ],
+    "rules": {
+        "prettier/prettier": "error",
+        "no-unused-vars": [
+            "warn",
+            {
+                "argsIgnorePattern": "^_"
+            }
+        ],
+        "no-console": "off",
+        "func-names": "off",
+        "no-use-before-define": "off",
+        "node/no-unpublished-require": "off"
+    }
+}
