@@ -18,8 +18,10 @@ export default {
 
 <style>
 :root {
-	--primary-color: #953036;
+	--primary-color: #1f212d;
+	--secundary-color: #953036;
 	--loader-color: #f3f3f3;
+	--border-color: rgba(243, 243, 243, 0.6);
 }
 * {
 	box-sizing: border-box;
@@ -61,7 +63,7 @@ ul {
 	margin: 1rem 0;
 }
 .search {
-	background: rgba(0, 0, 0, 0.5);
+	background: rgba(0, 0, 0, 0.7);
 	border: 4px #fff solid;
 	margin-top: 1rem;
 	padding: 2rem;
@@ -77,7 +79,7 @@ textarea {
 }
 .btn {
 	display: inline-block;
-	background: var(--primary-color);
+	background: var(--secundary-color);
 	color: #fff;
 	padding: 0.4rem 1.3rem;
 	border: none;

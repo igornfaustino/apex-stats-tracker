@@ -22,72 +22,25 @@
 					<ul>
 						<li>
 							<h4>Selected Legend</h4>
-							<p>{{ profileData.metadata.activeLegendName }}</p>
+							<p>{{ profileData.segments[1].metadata.name }}</p>
 						</li>
-						<li v-if="profileData.segments[1].stats.seasson2Wins">
-							<h4>Seasson 2 Wins</h4>
+						<li
+							v-for="stat in profileData.segments[1].stats"
+							:key="stat.displayname"
+						>
+							<h4>{{ stat.displayName }}</h4>
 							<p>
-								{{
-									profileData.segments[1].stats.seasson2Wins
-										.displayValue
-								}}
-								<span>
-									({{
-										profileData.segments[1].stats
-											.seasson2Wins.percentile
-									}})
-								</span>
-							</p>
-						</li>
-						<li v-if="profileData.segments[1].stats.level">
-							<h4>Apex Level</h4>
-							<p>
-								{{
-									profileData.segments[1].stats.level
-										.displayValue
-								}}
-								<span>
-									({{
-										profileData.segments[1].stats.level
-											.percentile
-									}}%)
-								</span>
-							</p>
-						</li>
-						<li v-if="profileData.segments[1].stats.kills">
-							<h4>Lifetime Kills</h4>
-							<p>
-								{{
-									profileData.segments[1].stats.kills
-										.displayValue
-								}}
-								<span>
-									({{
-										profileData.segments[1].stats.kills
-											.percentile
-									}}%)
-								</span>
-							</p>
-						</li>
-						<li v-if="profileData.segments[1].stats.damage">
-							<h4>Damage Done</h4>
-							<p>
-								{{
-									profileData.segments[1].stats.damage
-										.displayValue
-								}}
-								<span>
-									({{
-										profileData.segments[1].stats.damage
-											.percentile
-									}}%)
-								</span>
+								{{ stat.displayValue }}
+								<span>({{ stat.percentile }}%)</span>
 							</p>
 						</li>
 					</ul>
 				</div>
-				<div>
+				<div class="legend-image">
 					<img :src="profileData.segments[1].metadata.tallImageUrl" />
+					<button type="button" class="btn">
+						Choose other legend
+					</button>
 				</div>
 			</div>
 			<router-link to="/">Go back</router-link>
@@ -124,7 +77,11 @@ export default {
 			this.profileData = response.data.data;
 			console.log(this.profileData);
 		} catch (error) {
-			this.error = error.response.data.split(':')[1].replace(/"/g, '');
+			const errorTok = error.response.data.split(':');
+			this.error =
+				errorTok.length > 1
+					? errorTok[1].replace(/"/g, '')
+					: errorTok[0];
 		} finally {
 			this.loading = false;
 		}
@@ -140,7 +97,7 @@ export default {
 	align-items: center;
 }
 .container {
-	background: rgba(0, 0, 0, 0.5);
+	background-image: linear-gradient(#444, #1b0a10);
 	color: #fff;
 	max-width: 700px;
 	margin: 1rem auto;
@@ -157,15 +114,22 @@ h1.gamertag {
 	display: flex;
 	align-items: center;
 }
-a {
+a,
+.btn {
 	display: inline-block;
 	margin-top: 2rem;
 	border: #fff 2px solid;
 	padding: 0.5rem 0.8rem;
 }
+.btn:hover,
 a:hover {
 	border: #ccc 2px solid;
 	color: #ccc;
+}
+.btn {
+	display: block;
+	margin: auto;
+	font-size: 1.6rem;
 }
 .platform-avatar {
 	width: 40px;
@@ -175,15 +139,20 @@ img {
 	width: 100%;
 }
 .grid {
-	display: grid;
-	grid-template-columns: repeat(2, 1fr);
-	grid-gap: 1rem;
+	display: flex;
+	justify-content: center;
+}
+.space-between {
+	justify-content: space-between;
 }
 li {
-	background: rgba(0, 0, 0, 0.6);
+	/* background: rgba(0, 0, 0, 0.6); */
+	border-left: 10px solid var(--border-color);
+	border-top: 2px solid var(--border-color);
+	border-bottom: 2px solid var(--border-color);
 	padding: 1rem;
 	margin-bottom: 0.7rem;
-	border-radius: 10px;
+	border-radius: 0px 0px 0px 15px;
 }
 li p {
 	font-size: 2rem;
@@ -195,17 +164,30 @@ li span {
 	font-size: 1rem;
 	color: #ccc;
 }
-@media (max-width: 500px) {
+.legend-image {
+	border: 2px solid var(--border-color);
+	padding: 20px;
+	max-width: 50%;
+}
+@media (max-width: 700px) {
 	h1 {
 		font-size: 1.5rem;
 		display: block;
 		text-align: center;
 	}
-	.platform-avatar {
+	/* .platform-avatar {
 		display: none;
-	}
+	} */
 	.grid {
-		grid-template-columns: 1fr;
+		flex-direction: column-reverse;
+		justify-content: space-between;
+	}
+	.legend-image {
+		grid-column: 1;
+		max-width: 100%;
+	}
+	li {
+		border-right: 2px solid var(--border-color);
 	}
 	li p {
 		font-size: 1.5rem;
