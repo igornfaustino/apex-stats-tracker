@@ -1,19 +1,17 @@
 <template>
 	<div class="container">
 		<Header />
-		<Search />
+		<router-view />
 	</div>
 </template>
 
 <script>
 import Header from './components/Header';
-import Search from './components/Search';
 
 export default {
 	name: 'app',
 	components: {
 		Header,
-		Search,
 	},
 };
 </script>
@@ -21,6 +19,7 @@ export default {
 <style>
 :root {
 	--primary-color: #953036;
+	--loader-color: #f3f3f3;
 }
 * {
 	box-sizing: border-box;
@@ -32,6 +31,10 @@ body {
 	font-family: Arial, Helvetica, sans-serif;
 	color: #fff;
 	line-height: 1.6;
+	min-height: 100vh;
+	display: flex;
+	padding-top: 1rem;
+	justify-content: center;
 }
 a {
 	color: #fff;
@@ -49,9 +52,10 @@ ul {
 }
 .container {
 	max-width: 960px;
-	margin: 1rem auto;
+	width: 100%;
 	overflow: auto;
 	padding: 0 2rem;
+	height: 100%;
 }
 .form-group {
 	margin: 1rem 0;
