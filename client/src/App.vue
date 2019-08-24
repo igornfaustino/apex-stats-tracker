@@ -46,7 +46,7 @@ ul {
 	list-style: none;
 }
 .v--modal {
-	background: rgba(0, 0, 0, 0.8);
+	background: rgba(0, 0, 0, 0.8) !important;
 }
 .body-bg-no-image {
 	background: var(--primary-color);
