@@ -1,24 +1,15 @@
-# express-custom-starter-project
+# Apex Stats Tracker
 
-My custom node express starter project with some base configurations
+Simple app made in vue to track the Apex Legends Stats.
 
-## Features
+[Demo Here](https://aqueous-eyrie-12780.herokuapp.com/)
 
-- Express
-- auto import routes
-- Tests
-- Body Parser
-- Morgan tiny console logs
-- Winston file complete logs
-- common-errors
-- Joi
-- Joi validation mw
-- eslint
-- prettier
+**This app was inspired by a project from [Traversy Media](https://www.youtube.com/channel/UC29ju8bIPH5as8OGnQzwJyA)**
 
-## Scripts
+# How to run
 
-- npm start
-- npm run dev
-- npm test
-- npm run lint
+To run the server and the client just type
+
+```bash
+$ npm run dev
+```
