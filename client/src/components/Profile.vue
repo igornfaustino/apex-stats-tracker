@@ -22,10 +22,17 @@
 					<ul>
 						<li>
 							<h4>Selected Legend</h4>
-							<p>{{ profileData.segments[1].metadata.name }}</p>
+							<p>
+								{{
+									profileData.segments[selectedLegendIdx]
+										.metadata.name
+								}}
+							</p>
 						</li>
 						<li
-							v-for="stat in profileData.segments[1].stats"
+							v-for="stat in profileData.segments[
+								selectedLegendIdx
+							].stats"
 							:key="stat.displayname"
 						>
 							<h4>{{ stat.displayName }}</h4>
@@ -37,32 +44,57 @@
 					</ul>
 				</div>
 				<div class="legend-image">
-					<img :src="profileData.segments[1].metadata.tallImageUrl" />
-					<button type="button" class="btn">
+					<img
+						:src="
+							profileData.segments[selectedLegendIdx].metadata
+								.tallImageUrl
+						"
+					/>
+					<button type="button" class="btn" v-on:click="showModal">
 						Choose other legend
 					</button>
 				</div>
 			</div>
 			<router-link to="/">Go back</router-link>
 		</div>
+		<modal
+			name="legends-picker"
+			:width="800"
+			:height="500"
+			:adaptive="true"
+		>
+			<LegendPicker
+				v-on:legend="setLegend"
+				:legends="legends"
+				:activeLegend="selectedLegendIdx - 1"
+			/>
+		</modal>
 	</section>
 </template>
 
 <script>
 import axios from 'axios';
 import Loader from './Loader';
+import LegendPicker from './LegendPicker';
 
 export default {
 	name: 'Profile',
 	components: {
 		Loader,
+		LegendPicker,
 	},
 	data() {
 		return {
 			loading: false,
 			error: null,
 			profileData: null,
+			selectedLegendIdx: 1,
 		};
+	},
+	computed: {
+		legends: function() {
+			return this.profileData ? this.profileData.segments.slice(1) : [];
+		},
 	},
 	beforeCreate() {
 		document.body.className = 'body-bg-no-image';
@@ -85,6 +117,25 @@ export default {
 		} finally {
 			this.loading = false;
 		}
+	},
+	methods: {
+		showModal() {
+			this.$modal.show('legends-picker', {
+				width: 1000,
+			});
+		},
+		teste() {
+			alert('owaaaaaaaaaaa');
+		},
+		setLegend(legendIdx) {
+			this.$modal.hide('legends-picker');
+			this.selectedLegendIdx = legendIdx;
+		},
+	},
+	events: {
+		legend: function(legendIdx) {
+			alert(legendIdx);
+		},
 	},
 };
 </script>
@@ -115,18 +166,15 @@ h1.gamertag {
 	align-items: center;
 }
 a,
-.btn {
-	display: inline-block;
-	margin-top: 2rem;
-	border: #fff 2px solid;
-	padding: 0.5rem 0.8rem;
-}
 .btn:hover,
 a:hover {
 	border: #ccc 2px solid;
 	color: #ccc;
 }
 .btn {
+	margin-top: 2rem;
+	border: #fff 2px solid;
+	padding: 0.5rem 0.8rem;
 	display: block;
 	margin: auto;
 	font-size: 1.6rem;
